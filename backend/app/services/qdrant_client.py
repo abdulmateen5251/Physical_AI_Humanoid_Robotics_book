@@ -175,9 +175,9 @@ class QdrantService:
                 )
             
             # Perform search
-            search_result = self.client.search(
+            search_result = self.client.query_points(
                 collection_name=self.collection_name,
-                query_vector=query_vector,
+                query=query_vector,
                 limit=top_k,
                 query_filter=Filter(must=must_conditions) if must_conditions else None,
                 search_params=SearchParams(

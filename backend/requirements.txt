@@ -16,7 +16,7 @@ alembic==1.14.0
 SQLAlchemy==2.0.36
 
 # Vector Store
-qdrant-client==1.7.0
+qdrant-client>=1.7.1
 
 # AI/ML
 langchain==0.3.13

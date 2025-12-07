@@ -69,6 +69,7 @@ async def log_requests(request: Request, call_next):
 
 # Health check endpoint
 @app.get("/health", tags=["Health"])
+@app.get("/api/health", tags=["Health"])
 async def health_check():
     """Health check endpoint for monitoring."""
     return {

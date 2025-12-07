@@ -8,6 +8,10 @@
   overflow: hidden;
 }
 
+[data-theme='light'] .heroBanner {
+  background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 50%, #e0f2fe 100%);
+}
+
 .heroBanner::before {
   content: '';
   position: absolute;
@@ -15,11 +19,17 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: 
-    radial-gradient(circle at 20% 50%, rgba(0, 119, 255, 0.15) 0%, transparent 50%),
-    radial-gradient(circle at 80% 80%, rgba(138, 43, 226, 0.15) 0%, transparent 50%);
-  animation: pulse 8s ease-in-out infinite;
+  background:
+    radial-gradient(circle at 20% 50%, rgba(0, 119, 255, 0.15) 0%, transparent 50%)
+,                                                                                      radial-gradient(circle at 80% 80%, rgba(138, 43, 226, 0.15) 0%, transparent 50%
+);                                                                                   animation: pulse 8s ease-in-out infinite;
   pointer-events: none;
+}
+
+[data-theme='light'] .heroBanner::before {
+  background:
+    radial-gradient(circle at 20% 50%, rgba(37, 99, 235, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.08) 0%, transparent 50%);
 }
 
 @keyframes pulse {
@@ -75,6 +85,12 @@
   border: 1px solid rgba(0, 212, 255, 0.3);
 }
 
+[data-theme='light'] .badge {
+  background: rgba(37, 99, 235, 0.1);
+  color: #1d4ed8;
+  border: 1px solid rgba(37, 99, 235, 0.3);
+}
+
 .heroTitle {
   font-size: 3.5rem;
   font-weight: 800;
@@ -87,11 +103,22 @@
   background-clip: text;
 }
 
+[data-theme='light'] .heroTitle {
+  background: linear-gradient(135deg, #0f1419 0%, #1d4ed8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
 .heroSubtitle {
   font-size: 1.125rem;
   line-height: 1.8;
   color: rgba(255, 255, 255, 0.8);
   margin-bottom: 2rem;
+}
+
+[data-theme='light'] .heroSubtitle {
+  color: rgba(15, 20, 25, 0.85);
 }
 
 .badges {
@@ -115,8 +142,19 @@
   transition: all 0.3s ease;
 }
 
+[data-theme='light'] .badgeItem {
+  background: rgba(37, 99, 235, 0.08);
+  color: #0f1419;
+  border: 1px solid rgba(37, 99, 235, 0.2);
+}
+
 .badgeItem:hover {
   background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+[data-theme='light'] .badgeItem:hover {
+  background: rgba(37, 99, 235, 0.15);
   transform: translateY(-2px);
 }
 

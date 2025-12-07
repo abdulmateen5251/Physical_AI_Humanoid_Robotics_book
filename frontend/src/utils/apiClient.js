@@ -3,8 +3,8 @@
  * Handles all communication with the backend REST API
  */
 
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:8000';
-const API_TIMEOUT = parseInt(process.env.REACT_APP_API_TIMEOUT || '30000', 10);
+const API_BASE_URL = (typeof process !== 'undefined' && process.env?.REACT_APP_API_BASE_URL) || 'http://localhost:8000/api';
+const API_TIMEOUT = parseInt((typeof process !== 'undefined' && process.env?.REACT_APP_API_TIMEOUT) || '30000', 10);
 
 /**
  * Fetch wrapper with timeout and error handling

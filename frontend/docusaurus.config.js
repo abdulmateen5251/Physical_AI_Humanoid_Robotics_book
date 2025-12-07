@@ -36,9 +36,7 @@ const config = {
     locales: ['en'],
   },
 
-  plugins: [
-    './src/theme/ChatWidgetPlugin.js',
-  ],
+  plugins: [],
 
   presets: [
     [
@@ -72,7 +70,7 @@ const config = {
         title: 'Physical AI & Humanoid Robotics Course',
         logo: {
           alt: '',
-          src: 'Gemini_Generated_Image_iq3sb5iq3sb5iq3s.png',
+          src: 'img/ai-native-book.png',
         },
         items: [
           {
@@ -89,7 +87,7 @@ const config = {
         ],
       },
       footer: {
-        style: 'dark',
+        style: 'light',
         links: [
           {
             title: 'Modules',
