@@ -1,0 +1,72 @@
+[
+  {
+    "id": "q001",
+    "question": "What is ROS 2?",
+    "expected_topics": ["middleware", "robotics", "DDS", "communication"],
+    "module": "module-01-ros2",
+    "difficulty": "easy"
+  },
+  {
+    "id": "q002",
+    "question": "How do I create a simple publisher in rclpy?",
+    "expected_topics": ["rclpy", "create_publisher", "Node", "timer"],
+    "module": "module-01-ros2",
+    "difficulty": "medium"
+  },
+  {
+    "id": "q003",
+    "question": "What are the main differences between ROS 1 and ROS 2?",
+    "expected_topics": ["DDS", "real-time", "security", "multiple platforms"],
+    "module": "module-01-ros2",
+    "difficulty": "medium"
+  },
+  {
+    "id": "q004",
+    "question": "Explain the concept of nodes in ROS 2.",
+    "expected_topics": ["node", "process", "communication", "modular"],
+    "module": "module-01-ros2",
+    "difficulty": "easy"
+  },
+  {
+    "id": "q005",
+    "question": "What is the purpose of topics in ROS 2?",
+    "expected_topics": ["topics", "publish-subscribe", "message passing", "asynchronous"],
+    "module": "module-01-ros2",
+    "difficulty": "easy"
+  },
+  {
+    "id": "q006",
+    "question": "How do services differ from topics in ROS 2?",
+    "expected_topics": ["services", "request-response", "synchronous", "topics", "asynchronous"],
+    "module": "module-01-ros2",
+    "difficulty": "medium"
+  },
+  {
+    "id": "q007",
+    "question": "What is a subscriber in ROS 2 and how do you create one?",
+    "expected_topics": ["subscriber", "callback", "create_subscription", "message handling"],
+    "module": "module-01-ros2",
+    "difficulty": "medium"
+  },
+  {
+    "id": "q008",
+    "question": "What are the benefits of using DDS in ROS 2?",
+    "expected_topics": ["DDS", "quality of service", "discovery", "real-time"],
+    "module": "module-01-ros2",
+    "difficulty": "hard"
+  },
+  {
+    "id": "q009",
+    "question": "How do you initialize a ROS 2 node in Python?",
+    "expected_topics": ["rclpy.init", "Node class", "spin", "shutdown"],
+    "module": "module-01-ros2",
+    "difficulty": "easy"
+  },
+  {
+    "id": "q010",
+    "question": "What is the purpose of Quality of Service (QoS) settings in ROS 2?",
+    "expected_topics": ["QoS", "reliability", "durability", "history", "network behavior"],
+    "module": "module-01-ros2",
+    "difficulty": "hard"
+  }
+]

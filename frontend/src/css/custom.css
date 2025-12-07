@@ -1,0 +1,62 @@
+/**
+ * Any CSS included here will be global. The classic template
+ * bundles Infima by default. Infima is a flexible, modern, and well-tested
+ * CSS framework built by the Docusaurus team.
+ */
+
+/* You can override the default Infima variables here. */
+:root {
+  --ifm-color-primary: #2563eb;
+  --ifm-color-primary-dark: #1d4ed8;
+  --ifm-color-primary-darker: #1e40af;
+  --ifm-color-primary-darkest: #1e3a8a;
+  --ifm-color-primary-light: #3b82f6;
+  --ifm-color-primary-lighter: #60a5fa;
+  --ifm-color-primary-lightest: #93c5fd;
+  --ifm-code-font-size: 95%;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+}
+
+/* For readability concerns, you should choose a lighter palette in dark mode. */
+[data-theme='dark'] {
+  --ifm-color-primary: #60a5fa;
+  --ifm-color-primary-dark: #3b82f6;
+  --ifm-color-primary-darker: #2563eb;
+  --ifm-color-primary-darkest: #1d4ed8;
+  --ifm-color-primary-light: #93c5fd;
+  --ifm-color-primary-lighter: #bfdbfe;
+  --ifm-color-primary-lightest: #dbeafe;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+}
+
+/* Custom styles */
+html {
+  scroll-behavior: smooth;
+}
+
+.navbar {
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+}
+
+.markdown code {
+  background-color: rgba(37, 99, 235, 0.1);
+  color: #2563eb;
+  padding: 0.2rem 0.4rem;
+  border-radius: 3px;
+}
+
+[data-theme='dark'] .markdown code {
+  background-color: rgba(96, 165, 250, 0.15);
+  color: #93c5fd;
+}
+
+.docusaurus-highlight-code-line {
+  background-color: rgba(0, 0, 0, 0.1);
+  display: block;
+  margin: 0 calc(-1 * var(--ifm-pre-padding));
+  padding: 0 var(--ifm-pre-padding);
+}
+
+[data-theme='dark'] .docusaurus-highlight-code-line {
+  background-color: rgba(0, 0, 0, 0.3);
+}
