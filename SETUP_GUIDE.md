@@ -1,52 +1,556 @@
-# Setup Guide for Windows
+# 📋 Setup Guide - Physical AI & Humanoid Robotics Learning Platform
 
-## Prerequisites
+**Last Updated**: December 7, 2025  
+**Setup Time**: 5-10 minutes
 
-1. **Python 3.11+** (You have 3.13.7 ✓)
-2. **Node.js 18+** (For frontend)
-3. **Docker Desktop** (For local services)
-4. **Git** (For version control)
+---
 
-## Quick Start (Without Docker)
+## 🎯 Overview
 
-If you don't have Docker Desktop or want to test without it, you can use cloud services:
+This guide will help you set up and run the **Docusaurus documentation site** locally. The project is a static documentation platform without complex dependencies.
 
-### Step 1: Install Dependencies
+## ✅ Prerequisites
 
+### Required
+- **Node.js 18+** - [Download here](https://nodejs.org/)
+- **npm 10+** - Comes with Node.js
+- **Git** - [Download here](https://git-scm.com/downloads)
+
+### Optional (Not Required for Frontend)
+- Python 3.11+ - Only if you want to run backend
+- Docker - Only for advanced setup
+
+---
+
+## 🚀 Quick Start (5 minutes)
+
+### Step 1: Clone Repository
+
+```bash
+# Via HTTPS
+git clone https://github.com/abdulmateen5251/Physical_AI_Humanoid_Robotics_book.git
+
+# Or via SSH (if you have SSH keys configured)
+git clone git@github.com:abdulmateen5251/Physical_AI_Humanoid_Robotics_book.git
+
+# Navigate to project
+cd Physical_AI_Humanoid_Robotics_book
+```
+
+### Step 2: Install Frontend Dependencies
+
+```bash
+cd frontend
+npm install
+
+# Wait for npm to download all packages (~2-3 minutes)
+```
+
+**Windows Users** (PowerShell):
 ```powershell
-# Activate virtual environment
+cd frontend
+npm install
+```
+
+### Step 3: Start Development Server
+
+```bash
+npm start
+
+# Expected output:
+# ℹ ️  [docusaurus:start] Starting the development server...
+# ✔ [docusaurus:server] Server started on http://localhost:3001
+```
+
+### Step 4: Open in Browser
+
+Visit: **http://localhost:3001**
+
+You should see the documentation site with all course modules!
+
+---
+
+## 📖 Using the Site
+
+### Navigation
+- **Sidebar**: Click module names to expand/collapse
+- **Search**: Use search bar at top to find content
+- **Dark Mode**: Toggle in top-right corner
+- **Previous/Next**: Navigate between chapters
+
+### Course Structure
+1. **Module 1**: ROS 2 Fundamentals
+2. **Module 2**: Digital Twin & Simulation (Gazebo)
+3. **Module 3**: NVIDIA Isaac Sim
+4. **Module 4**: Vision-Language-Action (VLA)
+
+---
+
+## 🏗️ Project Structure
+
+```
+Physical_AI_Humanoid_Robotics_book/
+├── frontend/                    # Main documentation site
+│   ├── docs/                    # Course content
+│   │   ├── index.md             # Home page
+│   │   ├── module-01-ros2/      # Module 1 chapters
+│   │   ├── module-02-gazebo/    # Module 2 chapters
+│   │   ├── module-03-isaac/     # Module 3 chapters
+│   │   └── module-04-vla/       # Module 4 chapters
+│   ├── src/
+│   │   ├── components/          # React components
+│   │   ├── css/                 # Styling
+│   │   ├── pages/               # Custom pages
+│   │   └── theme/               # Theme customization
+│   ├── static/                  # Images, logos, assets
+│   ├── package.json             # Dependencies & scripts
+│   ├── docusaurus.config.js     # Site configuration
+│   └── sidebars.js              # Navigation sidebar
+│
+├── backend/                     # FastAPI backend (optional)
+│   ├── app/                     # Application code
+│   ├── requirements.txt         # Python dependencies
+│   └── alembic/                 # Database migrations
+│
+├── specs/                       # Original specifications
+└── README.md                    # Project overview
+
+```
+
+---
+
+## 🛠️ Common Commands
+
+### Development
+
+```bash
+cd frontend
+
+# Start dev server (auto-reloads on changes)
+npm start
+
+# Build for production
+npm run build
+
+# Serve production build locally
+npm run serve
+
+# Clean build directory
+npm run clean
+```
+
+### Code Quality
+
+```bash
+# Format code
+npm run format
+
+# Lint check
+npm run lint
+
+# Type check
+npm run typecheck
+```
+
+### Testing
+
+```bash
+# Build validation (ensures build works)
+npm run build
+```
+
+---
+
+## 🌐 Deployment
+
+### Deploy to Vercel (Recommended)
+
+1. Push code to GitHub
+2. Go to [vercel.com](https://vercel.com)
+3. Click "New Project"
+4. Select your repository
+5. Vercel auto-detects Docusaurus
+6. Click "Deploy"
+7. Site live in ~5 minutes!
+
+**Automatic deploys**: Every push to main branch deploys automatically
+
+### Deploy to Netlify
+
+```bash
+cd frontend
+npm run build
+# Upload frontend/build/ folder to Netlify
+```
+
+Or connect GitHub and Netlify will auto-deploy:
+1. Go to [netlify.com](https://netlify.com)
+2. Click "New site from Git"
+3. Select repository
+4. Build command: `cd frontend && npm run build`
+5. Publish directory: `frontend/build`
+
+### Deploy to GitHub Pages
+
+```bash
+cd frontend
+npm run build
+npm run deploy
+# Your site will be at: yourname.github.io/repo-name
+```
+
+---
+
+## 🔧 Customization
+
+### Change Site Title
+
+Edit `frontend/docusaurus.config.js`:
+```javascript
+const config = {
+  title: 'My Custom Title',
+  tagline: 'My custom tagline',
+  // ... rest of config
+};
+```
+
+### Add New Chapter
+
+1. Create `.md` file in appropriate module folder:
+   ```
+   frontend/docs/module-01-ros2/03-your-chapter.md
+   ```
+
+2. Update sidebar in `frontend/sidebars.js`:
+   ```javascript
+   ros2: [
+     'module-01-ros2/introduction',
+     'module-01-ros2/nodes-topics-services',
+     'module-01-ros2/your-chapter',  // Add this
+   ],
+   ```
+
+3. Restart dev server - changes appear automatically
+
+### Customize Colors
+
+Edit `frontend/src/css/custom.css`:
+```css
+:root {
+  --ifm-color-primary: #2e8555;      /* Primary color */
+  --ifm-color-primary-dark: #29784c;
+  --ifm-color-primary-darker: #277148;
+  --ifm-color-primary-darkest: #205540;
+  --ifm-color-primary-light: #33a566;
+  --ifm-color-primary-lighter: #37b26d;
+  --ifm-color-primary-lightest: #46cf9f;
+}
+```
+
+---
+
+## 🐛 Troubleshooting
+
+### Problem: `npm install` fails
+
+**Solution**:
+```bash
+# Clear npm cache
+npm cache clean --force
+
+# Delete node_modules and package-lock.json
+rm -rf node_modules package-lock.json
+
+# Reinstall
+npm install
+```
+
+**Windows PowerShell**:
+```powershell
+npm cache clean --force
+Remove-Item -Recurse node_modules
+Remove-Item package-lock.json
+npm install
+```
+
+### Problem: Port 3001 already in use
+
+**Solution**:
+```bash
+# Use different port
+npm start -- --port 3002
+```
+
+### Problem: Changes not appearing
+
+**Solution**:
+```bash
+# Clear Docusaurus cache
+npm run clean
+
+# Restart dev server
+npm start
+```
+
+### Problem: Build fails
+
+**Solution**:
+```bash
+# Check for broken links
+npm run build
+
+# If still fails, check:
+1. All markdown files are valid
+2. No broken image references
+3. No dead links in content
+```
+
+---
+
+## 📊 Development Workflow
+
+### Making Content Changes
+
+1. Edit `.md` files in `frontend/docs/`
+2. Changes auto-reload in browser
+3. Commit and push:
+   ```bash
+   git add .
+   git commit -m "docs: update chapter content"
+   git push origin main
+   ```
+4. Vercel/Netlify auto-deploys
+
+### Making Code Changes
+
+1. Edit React components in `frontend/src/`
+2. Changes auto-reload in browser
+3. Test: `npm run build`
+4. Commit and push
+5. Auto-deploy
+
+---
+
+## 🚀 Backend Setup (Optional)
+
+If you want to run the backend (not required for documentation):
+
+### Prerequisites
+- Python 3.11+
+- PostgreSQL (or Docker)
+
+### Setup
+
+```bash
+# Create virtual environment
+python -m venv .venv
+
+# Activate (Mac/Linux)
+source .venv/bin/activate
+
+# Activate (Windows PowerShell)
 .\.venv\Scripts\Activate.ps1
 
-# Install backend dependencies
+# Install dependencies
+pip install -r backend/requirements.txt
+
+# Start server
 cd backend
-uv pip install -r requirements.txt
-cd ..
+uvicorn app.main:app --reload --port 8000
 ```
 
-### Step 2: Configure Environment Variables
+**Note**: Backend is optional - the documentation site works without it.
 
-Edit `backend\.env` and add your API keys:
+---
 
-**Required for Phase 3 Testing:**
-- `OPENAI_API_KEY` - Get from https://platform.openai.com/api-keys
-- `QDRANT_URL` - Use Qdrant Cloud (free tier): https://cloud.qdrant.io
-- `QDRANT_API_KEY` - From Qdrant Cloud dashboard
-- `DATABASE_URL` - Use Neon (free tier): https://neon.tech
+## 📝 Editing Content
 
-**Example with cloud services:**
-```env
-OPENAI_API_KEY=sk-proj-abc123...
-QDRANT_URL=https://xyz-abc.us-east.aws.cloud.qdrant.io:6333
-QDRANT_API_KEY=abc123...
-DATABASE_URL=postgresql+asyncpg://user:pass@ep-cool-name-123456.us-east-2.aws.neon.tech/neondb
+### Add a New Module
+
+1. Create folder: `frontend/docs/module-05-name/`
+2. Create chapters as `.md` files
+3. Update `frontend/sidebars.js`:
+   ```javascript
+   {
+     type: 'category',
+     label: 'Module 5: Your Module',
+     items: [
+       'module-05-name/chapter-1',
+       'module-05-name/chapter-2',
+     ],
+   }
+   ```
+
+### Markdown Features Supported
+
+```markdown
+# Heading 1
+## Heading 2
+### Heading 3
+
+**Bold text**
+*Italic text*
+
+- Bullet point
+- Another point
+
+1. Numbered list
+2. Another item
+
+[Link text](https://example.com)
+
+![Image alt](./image.png)
+
+> Blockquote
+
+\`\`\`python
+# Code block
+def hello():
+    print("Hello, World!")
+\`\`\`
+
+<div className="custom-class">
+Custom HTML/JSX
+</div>
 ```
 
-### Step 3: Initialize Database
+### Admonitions (Info Boxes)
 
-```powershell
-cd backend
-alembic upgrade head
+```markdown
+:::tip
+This is a helpful tip!
+:::
+
+:::note
+Important information
+:::
+
+:::warning
+Be careful about this!
+:::
+
+:::danger
+This is dangerous!
+:::
 ```
+
+---
+
+## 🤝 Contributing
+
+### Contribute Content
+
+1. Fork repository on GitHub
+2. Create branch: `git checkout -b feat/new-content`
+3. Add or edit content in `frontend/docs/`
+4. Test: `npm run build`
+5. Commit: `git commit -m "docs: add new chapter"`
+6. Push: `git push origin feat/new-content`
+7. Open Pull Request on GitHub
+
+### Contribute Code
+
+1. Fork repository
+2. Create branch: `git checkout -b feat/new-feature`
+3. Edit code in `frontend/src/` or `backend/`
+4. Test thoroughly
+5. Submit Pull Request
+
+---
+
+## 📚 Documentation Standards
+
+### Writing Guidelines
+- Use clear, technical English
+- Include code examples
+- Add exercises at chapter end
+- Keep lines ~100 characters
+- Use proper Markdown formatting
+- Add images when helpful
+
+### Code Example Format
+```markdown
+### Example: Title of Example
+
+\`\`\`python
+# Language specified
+# Code here
+\`\`\`
+
+**Output**:
+\`\`\`
+expected output
+\`\`\`
+
+**Explanation**: What the code does
+```
+
+---
+
+## 🔒 Environment Variables
+
+For backend (optional):
+
+Create `backend/.env`:
+```bash
+# Backend Configuration
+OPENAI_API_KEY=sk-...
+QDRANT_URL=http://localhost:6333
+DATABASE_URL=postgresql://...
+ENVIRONMENT=development
+LOG_LEVEL=INFO
+```
+
+**Important**: Never commit `.env` file!
+
+---
+
+## 📞 Getting Help
+
+### Resources
+- [Docusaurus Docs](https://docusaurus.io/)
+- [Markdown Guide](https://www.markdownguide.org/)
+- [React Documentation](https://react.dev/)
+
+### Community
+- Open an [GitHub Issue](https://github.com/abdulmateen5251/Physical_AI_Humanoid_Robotics_book/issues)
+- Check [GitHub Discussions](https://github.com/abdulmateen5251/Physical_AI_Humanoid_Robotics_book/discussions)
+- Email: abdulmateen5251@gmail.com
+
+---
+
+## ✅ Verification Checklist
+
+After setup, verify everything works:
+
+- [ ] `npm install` completes without errors
+- [ ] `npm start` opens site at http://localhost:3001
+- [ ] All 4 modules visible in sidebar
+- [ ] Search functionality works
+- [ ] Dark mode toggle works
+- [ ] Navigation between chapters works
+- [ ] Images load correctly
+- [ ] Code blocks display properly
+- [ ] Site responsive on mobile
+- [ ] `npm run build` succeeds
+
+---
+
+## 🎉 You're Ready!
+
+Your development environment is now set up. Start exploring and contributing!
+
+### Next Steps
+1. Read through course modules
+2. Make a test change to content
+3. Try deploying to production
+4. Start contributing!
+
+---
+
+**Happy Learning! 🚀**
+
+Last Updated: December 7, 2025
 
 ### Step 4: Start the Server
 
