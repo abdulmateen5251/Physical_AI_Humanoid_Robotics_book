@@ -1,0 +1,25 @@
+# FastAPI Backend
+fastapi==0.109.2
+uvicorn[standard]==0.27.0
+pydantic==2.6.4
+pydantic-settings==2.2.1
+
+# OpenAI (for embeddings and ChatKit/Agents)
+openai==1.14.0
+
+# Qdrant Vector Store
+qdrant-client==2.7.3
+
+# Database (Neon Postgres)
+sqlalchemy==2.0.25
+psycopg2-binary==2.9.9
+alembic==1.13.1
+
+# Utilities
+python-dotenv==1.0.0
+python-multipart==0.0.6
+
+# Testing
+pytest==7.4.4
+pytest-asyncio==0.23.3
+httpx==0.26.0

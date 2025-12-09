@@ -1,89 +1,57 @@
-﻿# GitHub Copilot & Contributor Instructions
+﻿# Integrated RAG Chatbot — Copilot Instructions (Short)
 
-This file instructs Copilot-assisted development and contributor behavior for this Spec-Driven repo.
+Scope: Embed a RAG chatbot in a published book using OpenAI Agents/ChatKit, FastAPI, Neon Serverless Postgres, and Qdrant Cloud Free Tier. It must answer questions about the book’s content and strictly support “selection-only” answers when the user highlights text. Assume the book content is prepared and ready for ingestion.
 
-## Goals for Copilot/AI-assisted workflows
-- Use Copilot to generate boilerplate code (Docusaurus pages, FastAPI endpoints, Qdrant client code, embedding pipeline).
-- Use Claude Code subagents via Spec-Kit Plus to generate complex content (chapter drafting, translations, personalization policies).
-- Use Copilot to provide test scaffolding and unit tests; always review and run tests locally.
+## 0) SpecKit+ Workflow (No vibe coding)
+- Only use Spec Kit slash commands; do not handcraft ad‑hoc steps.
+  1. /speckit.constitution
+  2. /speckit.specify
+  3. /speckit.plan
+  4. /speckit.tasks
+  5. /speckit.implement
+- Every run must update history and prompt files (see Persistence) and commit them.
 
-## Branching / Commit Conventions
-- Branches:
-  - feat/<short-desc>
-  - fix/<short-desc>
-  - chore/<short-desc>
-  - docs/<short-desc>
-- Commit messages:
-  - Use Conventional Commits style:
-    - feat(spec): add rag indexing pipeline (SPEC-020)
-    - fix(api): correct selection-mode enforcement (SPEC-032)
-  - Include the relevant SPEC-### in the commit body when applicable.
-- PR Titles:
-  - <type>(SPEC-###): short description
-  - Example: feat(SPEC-020): implement ingestion pipeline and qdrant client
+## 1) What to Build
+- Book-wide Q&A with grounded citations (chapter/section/page/URI).
+- Selection-only mode: answer strictly from highlighted text (and only immediate neighbors if explicitly enabled); otherwise return “insufficient evidence.”
+- Backend: FastAPI endpoints for chat, retrieval, selection.
+- Persistence: Neon tables for sessions, messages, selections, citations.
+- Retrieval: Qdrant over chunked book content with OpenAI embeddings.
+- Orchestration: OpenAI Agents/ChatKit for prompts and streaming answers.
 
-## PR Template (copy to .github/PULL_REQUEST_TEMPLATE.md)
-- Summary of changes
-- Linked tasks and spec IDs
-- How to test locally
-- Test coverage / results
-- Screenshots or demo link
-- Checklist:
-  - [ ] Linted
-  - [ ] Tests added
-  - [ ] Spec updated
-  - [ ] Docs updated
-  - [ ] Reviewed by X
+## 2) Minimal Plan
+- Ingest: Parse → chunk by structure/length → embed (OpenAI) → upsert to Qdrant (metadata: chapter/section/page/URI).
+- Retrieve: Vector search; apply selection-only filters when selection exists; rank by similarity and proximity.
+- Generate: ChatKit prompts with retrieved chunks; stream response; always include citations.
+- Persist: Save sessions, messages, selections, citations in Neon Postgres.
+- UI: Reader integrates selection capture and a chat sidebar with a selection-only toggle.
 
-## How to use Spec-Kit Plus & Claude Code (practical instructions)
-- Update spec.md repository field to your owner/repo.
-- Use Spec-Kit Plus to convert spec.md problem_statement into actionable branch + PR:
-  - Provide the problem_statement exactly as written in spec.md.
-  - Provide base_ref if you want the PR against a branch other than main.
-- For complex content (chapters), use Claude Code to generate:
-  - Chapter outlines (prompt: "Using the course curriculum and learning outcomes, generate a chapter outline for X with learning objectives, 3 exercises, and one quiz.")
-  - Translation subagent (prompt: "Translate chapter content to Urdu with domain-specific technical terms preserved and glossary entries.")
-- When Copilot generates code, do:
-  - Run static analysis and linter.
-  - Add tests.
-  - Annotate where Copilot code needs human review.
+## 3) Endpoints (FastAPI)
+- POST /chat: {question, selection?{text, chapter, section, page}, session_id} → streamed answer + citations; enforce selection-only when provided.
+- POST /retrieve: internal retrieval with filters.
+- POST /selection: store selection metadata.
+- GET /history?session_id=: return messages + citations.
 
-## Local Dev & Quick Commands
-- Setup virtual env:
-  - python -m venv .venv && source .venv/bin/activate
-  - pip install -r requirements.txt
-- Run backend:
-  - uvicorn app.main:app --reload
-- Index sample docs:
-  - python scripts/ingest_to_qdrant.py --docs ./docs --collection physical_ai_humanoid_robotics_course
+## 4) Tasks (Condensed)
+- Implement scripts/ingest_book.py to chunk/embed/upsert to Qdrant.
+- Backend: main.py, routes/chat.py, routes/retrieve.py, routes/selection.py.
+- Storage: storage/qdrant.py, storage/postgres.py; Neon schema for sessions/messages/selections/citations.
+- Frontend: selection capture + chat sidebar; show streamed answers and citations.
+- Tests: selection-only enforcement; citation presence; basic e2e Q&A.
 
-## Security & Secrets
-- Never commit secrets; use GitHub Actions secrets.
-- Use the following secret names:
-  - QDRANT_API_KEY
-  - NEON_URL
-  - BETTER_AUTH_CLIENT_ID
-  - BETTER_AUTH_CLIENT_SECRET
-  - OPENAI_API_KEY (or CLAUDE_API_KEY)
-- For Copilot: be mindful that Copilot will not have your secrets; use placeholders in code and fetch secrets from environment in runtime.
+## 5) Prompts (Repo Files)
+- .specify/memory/prompts/system.md: book-only grounding, mandatory citations, strict selection-only policy.
+- .specify/memory/prompts/assistant.md: concise, scholarly; refusal on weak evidence; list sources.
+- .specify/memory/prompts/user_templates.md: templates for normal and selection-only Q&A.
 
-## Example Prompts for Generating Chapters (use with Claude Code or Copilot)
-- "Write a 1500-word Chapter: 'ROS 2 Nodes, Topics, Services' with examples in rclpy and a lab exercise to create a publisher & subscriber. Include code blocks and expected output for Ubuntu 22.04 and ROS 2 Humble/Iron."
-- "Create 5 multiple-choice questions and 3 coding exercises for 'Gazebo URDF basics'. Each coding exercise should have a rubric and expected output."
-- "Generate a concise README describing how to run the RAG pipeline locally, including commands and debug tips for Qdrant ingestion."
+## 6) History & Prompt Persistence (Explicit)
+- Create and continuously update:
+  - .specify/memory/history/{user}-{YYYYMMDD}.json (all sessions/messages/selections/citations refs)
+  - .specify/memory/prompts/system.md, assistant.md, user_templates.md (versioned as they evolve)
+- All changes must be produced via SpecKit+ commands and captured in commits/PRs. No manual “vibe coding.”
 
-## Copilot Review Checklist
-- Correctness: run code to verify.
-- Security: ensure inputs validated (no arbitrary LLM prompt injection).
-- Testability: include tests or describe manual test steps.
-- Documentation: update README and docs/ with usage.
-- Reusability: prefer small, testable functions and subagent APIs.
-
-## Using Copilot to Build Tests
-- Always ask Copilot to produce tests for any new function or endpoint.
-- Example prompt to Copilot: "Create pytest unit tests for the FastAPI /api/retrieve endpoint that mocks Qdrant retrieval and asserts the response format."
-
-## Onboarding New Contributors
-- Run `make setup` (if present) to prepare local environment.
-- Read this repo's spec.md and tasks.md to pick tasks.
-- Before opening a PR, run `pre-commit` and tests.
+## 7) Risk Management
+- Strict grounding; refuse outside-book answers.
+- Validate selections; return “insufficient evidence” when needed.
+- Graceful degradation on Qdrant/Neon outages; minimal data retention for privacy.
+- Keep latency reasonable via chunk sizing and top-k tuning.
